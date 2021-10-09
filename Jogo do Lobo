@@ -1,0 +1,279 @@
+class Entity{
+// Atributos
+    x : number;
+    y : number;
+    step : number;
+    image : p5.Image;
+
+// Parâmetros
+constructor(x: number, y: number, step: number, image: p5.Image){
+    this.x = x;
+    this.y = y;
+    this.step = step;
+    this.image = image;
+
+
+
+}
+
+//Métodos
+
+draw(): void {
+
+    image(this.image, this.x * this.step, this.y * this.step, this.step, this.step )
+}
+
+}
+
+
+class Board {
+
+    nl : number;
+    nc : number;
+    step : number;
+    background : p5.Image;
+
+constructor(nc: number, nl: number, step: number, background: p5.Image) {
+    this.nl = nl;
+    this.nc = nc;
+    this.step = step;
+    this.background = background;
+
+
+}
+
+draw(): void {
+
+    image(this.background, 0, 0, this.nc * this.step, this.nl * this.step);
+
+        for (let x = 0; x < this.nc; x++) {
+            for (let y = 0; y < this.nl; y++) {
+
+               noFill();
+                stroke(0);
+                strokeWeight(2);
+                rect(x * this.step, y * this.step, this.step, this.step)
+
+            }
+        }
+    }
+
+}
+
+// Variáveis
+
+let wolf_img : p5.Image;
+let rabbit_img: p5.Image;
+let board_img : p5.Image;
+let hunter_img : p5.Image;
+let pond_img : p5.Image;
+let berry_img : p5.Image;
+
+let wolf : Entity;
+let hunter : Entity;
+let rabbit: Entity;
+let board : Board;
+let pond : Entity;
+let pond2 : Entity;
+let pond3 : Entity;
+let berry : Entity;
+
+let cont : number = 0;
+let timerMax : number = 0;
+let aleat = Math.floor(Math.random() * 8)
+
+
+function loadImg(path: string): p5.Image {
+
+    return loadImage(
+        path,
+        () => console.log("Loading" + path + "ok"),
+        () => console.log("Loading" + path + "error")
+    );
+}
+
+function preload(){
+    wolf_img = loadImg("../sketch/lobol.png");
+    rabbit_img = loadImg("../sketch/coelho.png");
+    board_img = loadImg("../sketch/grama.jpg");
+    hunter_img = loadImg("../sketch/Caçador.png");
+    pond_img = loadImg("../sketch/lago.png");
+    berry_img = loadImg("../sketch/berry.png")
+
+
+}
+
+function keyPressed(){
+    let size = 100;
+    if (keyCode === LEFT_ARROW) {
+
+        wolf.x--
+
+        //Colisão com o Grid
+
+        if (wolf.x == board.nc - (board.nc + 1)){
+            wolf.x = board.nc - board.nc
+        }
+        
+        
+
+        // Colisão com o Lago 1
+        if (wolf.x === pond.x && wolf.y === pond.y){
+            wolf.x = pond.x+1
+        }
+        // Colisão com o Lago 2
+        if (wolf.x === pond2.x && wolf.y === pond2.y){
+            wolf.x = pond2.x+1
+        }
+        // Colisão com o Lago 3
+        if (wolf.x === pond3.x && wolf.y === pond3.y){
+            wolf.x = pond3.x+1
+        }
+    } else if (keyCode === RIGHT_ARROW) {
+
+        wolf.x++
+
+        //Colisão com o Grid
+        if (wolf.x == board.nc) {
+            wolf.x = board.nc - 1
+        }
+        // Colisão com o Lago 1
+        if (wolf.x === pond.x && wolf.y === pond.y){
+            wolf.x = pond.x - 1
+        }
+        // Colisão com o Lago 2
+        if (wolf.x === pond2.x && wolf.y === pond2.y){
+            wolf.x = pond2.x - 1
+        }
+        // Colisão com o Lago 3
+        if (wolf.x === pond3.x && wolf.y === pond3.y){
+            wolf.x = pond3.x - 1
+        }
+    } else if (keyCode === UP_ARROW) {
+
+        wolf.y--
+        // Colisão com o Grid
+        if (wolf.y == board.nl - (board.nl +1)){
+            wolf.y = board.nl - board.nl
+        }
+        // Colisão com o Lago 1
+        if (wolf.x === pond.x && wolf.y === pond.y){
+            wolf.y = pond.y+1
+        }
+        // Colisão com o Lago 2
+        if (wolf.x === pond2.x && wolf.y === pond2.y){
+            wolf.y = pond2.y+1
+        }
+        // Colisão com o Lago 3
+        if (wolf.x === pond3.x && wolf.y === pond3.y){
+            wolf.y = pond3.y+1
+        } 
+    } else if (keyCode === DOWN_ARROW) {
+        
+        wolf.y++
+
+    // Colisão com o Grid
+        if (wolf.y == board.nl){
+            wolf.y = board.nl - 1
+        }
+        // Colisão com o Lago 1
+        if (wolf.x === pond.x && wolf.y === pond.y){
+            wolf.y = pond.y-1
+        }
+        // Colisão com o Lago 2
+        if (wolf.x === pond2.x && wolf.y === pond2.y){
+            wolf.y = pond2.y-1
+        }
+        // Colisão com o Lago 3
+        if (wolf.x === pond3.x && wolf.y === pond3.y){
+            wolf.y = pond3.y-1
+        }
+
+        
+    }
+
+    if (keyCode === "A".charCodeAt(0)) {
+        rabbit.x--
+        if (rabbit.x == board.nc - (board.nc +1)) {
+            rabbit.x = board.nc - 1
+
+        }
+    } else if (keyCode === "D".charCodeAt(0)) {
+        rabbit.x++
+        if (rabbit.x == board.nc){
+            rabbit.x =  board.nc - board.nc;
+        }
+    } else if (keyCode === "W".charCodeAt(0)) {
+        rabbit.y--
+        if (rabbit.y == board.nl - (board.nl + 1)){
+            rabbit.y = board.nl - 1;
+        } 
+    } else if (keyCode === "S".charCodeAt(0)) {
+        rabbit.y++;
+        if (rabbit.y == board.nl){
+            rabbit.y = board.nl - board.nl;
+        }
+    }
+    // Pontuação e Timer
+    if (wolf.x === rabbit.x && wolf.y === rabbit.y){
+        cont += 1;
+        timerMax = frameCount
+        frameCount = 0;
+    }
+   // Comidinho do Coelho
+    if (rabbit.x ===  berry.x && rabbit.y === berry.y){
+        berry =  new Entity(aleat,aleat,size,berry_img)
+    }
+    
+}
+
+
+
+function setup(){
+    let size = 100;
+    
+    board = new Board(7, 7, size, board_img);
+    wolf = new Entity(2, 2, size, wolf_img);
+    hunter = new Entity (4, 4, size, hunter_img);
+    pond = new Entity(3, 3, size, pond_img);
+    pond2 = new Entity(5,4, size, pond_img);
+    pond3 = new Entity(0, 5, size, pond_img);
+    rabbit = new Entity(1, 1, size, rabbit_img);
+    berry = new Entity(2,5,size,berry_img);
+    createCanvas(board.nc * size, board.nl * size );
+
+    
+
+    
+
+}
+
+
+
+
+
+
+function draw(){
+    
+    board.draw();
+    wolf.draw();
+    rabbit.draw();
+    //hunter.draw();
+    pond.draw();
+    pond2.draw();
+    pond3.draw();
+    berry.draw();
+
+    fill(255);
+    textSize(60);
+    text(cont,10,50);
+
+    fill(255);
+    textSize(60);
+    text(frameCount,590,50);
+
+    fill(255);
+    textSize(60);
+    text(timerMax,308,50);
+
+}
