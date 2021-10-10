@@ -68,6 +68,8 @@ let board_img : p5.Image;
 let hunter_img : p5.Image;
 let pond_img : p5.Image;
 let berry_img : p5.Image;
+let burrow_img : p5.Image;
+let steak_img : p5.Image;
 
 let wolf : Entity;
 let hunter : Entity;
@@ -77,10 +79,16 @@ let pond : Entity;
 let pond2 : Entity;
 let pond3 : Entity;
 let berry : Entity;
+let burrow : Entity;
+let burrow2 : Entity;
+let steak : Entity
+
 
 let cont : number = 0;
 let timerMax : number = 0;
 let aleat = Math.floor(Math.random() * 8)
+let frenzy = false;
+let cont_passos = 0;
 
 
 function loadImg(path: string): p5.Image {
@@ -98,20 +106,22 @@ function preload(){
     board_img = loadImg("../sketch/grama.jpg");
     hunter_img = loadImg("../sketch/Caçador.png");
     pond_img = loadImg("../sketch/lago.png");
-    berry_img = loadImg("../sketch/berry.png")
-
+    berry_img = loadImg("../sketch/berry.png");
+    burrow_img = loadImg("../sketch/toca.png");
+    steak_img = loadImg("../sketch/steak.png");
 
 }
 
 function keyPressed(){
     let size = 100;
     if (keyCode === LEFT_ARROW) {
+        cont_passos += 1;
 
         wolf.x--
 
         //Colisão com o Grid
 
-        if (wolf.x == board.nc - (board.nc + 1)){
+        if (wolf.x == board.nc - (board.nc + 1) && frenzy == false) {
             wolf.x = board.nc - board.nc
         }
         
@@ -130,13 +140,17 @@ function keyPressed(){
             wolf.x = pond3.x+1
         }
     } else if (keyCode === RIGHT_ARROW) {
+        cont_passos += 1;
 
         wolf.x++
 
         //Colisão com o Grid
-        if (wolf.x == board.nc) {
-            wolf.x = board.nc - 1
+        if (wolf.x == board.nc && frenzy == false) {
+            wolf.x = board.nc - 1;
+
         }
+        
+        
         // Colisão com o Lago 1
         if (wolf.x === pond.x && wolf.y === pond.y){
             wolf.x = pond.x - 1
@@ -150,10 +164,11 @@ function keyPressed(){
             wolf.x = pond3.x - 1
         }
     } else if (keyCode === UP_ARROW) {
+        cont_passos += 1;
 
         wolf.y--
         // Colisão com o Grid
-        if (wolf.y == board.nl - (board.nl +1)){
+        if (wolf.y == board.nl - (board.nl +1) && frenzy == false){
             wolf.y = board.nl - board.nl
         }
         // Colisão com o Lago 1
@@ -169,11 +184,12 @@ function keyPressed(){
             wolf.y = pond3.y+1
         } 
     } else if (keyCode === DOWN_ARROW) {
+        cont_passos += 1;
         
         wolf.y++
 
     // Colisão com o Grid
-        if (wolf.y == board.nl){
+        if (wolf.y == board.nl && frenzy == false){
             wolf.y = board.nl - 1
         }
         // Colisão com o Lago 1
@@ -189,6 +205,7 @@ function keyPressed(){
             wolf.y = pond3.y-1
         }
 
+     
         
     }
 
@@ -219,11 +236,44 @@ function keyPressed(){
         cont += 1;
         timerMax = frameCount
         frameCount = 0;
+        rabbit.x = 3;
+        rabbit.y = 0;
     }
-   // Comidinho do Coelho
-    if (rabbit.x ===  berry.x && rabbit.y === berry.y){
-        berry =  new Entity(aleat,aleat,size,berry_img)
+   // Bife
+    if (wolf.x === steak.x && wolf.y === steak.y){
+        frenzy = true
+        steak.x = 9;
+        steak.y = 9;
+        
     }
+    if (frenzy === true){
+        //Contador que faz a manutenção do Frenzy
+        if (cont_passos >= 15){
+            frenzy = false;
+
+            
+        }  
+        //Pra direita
+        if (wolf.x == board.nc) {
+            wolf.x = 0;
+        //Pra esquerda
+        } else if (wolf.x == board.nc - (board.nc +1)){
+            wolf.x = board.nc - 1;
+        //Pra cima 
+        } else if (wolf.y == board.nl - (board.nl + 1)){
+            wolf.y = board.nl - 1;
+        //Pra baixo
+        } else if (wolf.y == board.nl) {
+            wolf.y = 0;
+        }
+        
+        
+        
+    }
+
+
+  
+    
     
 }
 
@@ -233,13 +283,15 @@ function setup(){
     let size = 100;
     
     board = new Board(7, 7, size, board_img);
-    wolf = new Entity(2, 2, size, wolf_img);
+    wolf = new Entity(0, 3, size, wolf_img);
     hunter = new Entity (4, 4, size, hunter_img);
-    pond = new Entity(3, 3, size, pond_img);
+    pond = new Entity(0, 1, size, pond_img);
     pond2 = new Entity(5,4, size, pond_img);
     pond3 = new Entity(0, 5, size, pond_img);
-    rabbit = new Entity(1, 1, size, rabbit_img);
+    rabbit = new Entity(6, 3, size, rabbit_img);
     berry = new Entity(2,5,size,berry_img);
+    burrow = new Entity(3, 6, size, burrow_img);
+    steak = new Entity(3,3,size,steak_img);
     createCanvas(board.nc * size, board.nl * size );
 
     
@@ -262,7 +314,9 @@ function draw(){
     pond.draw();
     pond2.draw();
     pond3.draw();
-    berry.draw();
+    steak.draw();
+   //burrow.draw();
+    //berry.draw();
 
     fill(255);
     textSize(60);
@@ -274,6 +328,18 @@ function draw(){
 
     fill(255);
     textSize(60);
-    text(timerMax,308,50);
+    text(timerMax,325   ,50);
+
+    fill(255);
+    textSize(20);
+    text("Pont.Lobo",10,80);
+
+    fill(255);
+    textSize(20);
+    text("Tempo Coelho Vivo",520,80);
+
+    fill(255);
+    textSize(20);
+    text("Tempo Coelho Ult.",255,80);
 
 }
