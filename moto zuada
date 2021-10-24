@@ -1,0 +1,115 @@
+class Pessoa {
+    nome : string;
+    idade : number;
+
+    constructor(nome : string, idade : number){
+        this.nome = nome;
+        this.idade = idade;
+    }
+
+    toString(){
+        return "Nome: " + this.nome + "Idade: " + this.idade; 
+    }
+}
+
+
+class Moto {
+    pessoa : Pessoa;
+    pessoanum : number;
+    pot : number;
+    tempo : number;
+
+    constructor(pessoanum : number, pessoa: Pessoa, pot : number, tempo : number){
+        this.pessoa = pessoa;
+        this.pot = pot;
+        this.tempo = tempo;
+        this.pessoanum = pessoanum;
+    }
+
+    MotoLigar(){
+        this.pot = 1;
+        this.tempo = 0;
+        this.pessoanum = 0; 
+
+
+    }
+
+    MotoSubir(pessoa : Pessoa){
+        if (this.pessoanum >= 1){
+            console.log("Já há pessoa(s) em cima da moto.")
+        }
+        console.log("Subiu na moto o indivíduo " + João.nome);
+        this.pessoanum = 1;
+
+
+
+    }
+    MotoDescer(pessoa : Pessoa){
+        if (this.pessoanum == 0){
+            console.log("Não há ninguém para descer da moto.")
+        }
+        console.log("O Indivíduo desceu da moto.")
+    }
+
+    ComprarTempo(tempo : number){
+        let tempotot = tempo;
+        console.log("O seu total de minutos é igual a " + tempo + " minuto(s)")
+        
+        
+
+    }
+
+    DirigirTempo(tempo : number){
+        
+        if(this.pessoa.idade <= 10){
+            console.log("Pode andar, muleke")
+        }
+
+    
+        
+       
+        
+
+    }
+
+    CompararTempo(){
+        if (this.ComprarTempo > this.DirigirTempo){
+            console.log("Ainda tem tempo.")
+        }
+    }
+    
+    Buzina(x : number){
+        console.log("p")
+        for(let i = 0;i >= 0; i += x){
+            console.log("e")
+            if (i > x){
+                break
+            }
+            
+
+    
+
+        }
+        
+  
+    }
+    
+
+    }
+
+
+
+
+let João = new Pessoa("João",6);
+
+
+            //n de pess, Pessoa, Pot, Tempo 
+let Harley= new Moto(1,João,1,10);
+
+
+Harley.ComprarTempo(10);
+Harley.DirigirTempo(8);
+Harley.Buzina(4);
+Harley.CompararTempo();
+
+//Harley.Buzina2(3);
