@@ -1,0 +1,147 @@
+class Tamagochi {
+   nome: String;
+    private energia: number;
+    private saciedade: number;
+    private limpeza: number;
+    private energiaMax: number = 10;
+   private saciedadeMax: number = 10;
+   private limpezaMax: number = 10;
+    private diamantes: number = 0;
+    private idade : number = 0;
+
+   
+   constructor(nome: String, energia: number, saciedade: number, limpeza:number){
+       this.nome = nome;
+       this.energia = energia;
+       this.saciedade = saciedade;
+       this.limpeza = limpeza;
+       this.diamantes = 0;
+       
+   }
+   
+   getEnergia(){
+       return this.energia
+   }
+
+   getSaciedade(){
+       return this.saciedade
+   }
+   
+   getLimpeza(){
+       return this.limpeza
+   }
+
+   getEnergiaMax(){
+       return this.energiaMax
+   }
+
+   getSaciedadeMax(){
+       return this.saciedadeMax
+
+   }
+
+   getLimpezaMax(){
+       return this.limpezaMax
+   }
+
+   getDiamantes(){
+       return this.diamantes
+   }
+
+   getIdade(){
+       return this.idade
+   }
+
+alimentarTamagochi(): boolean{
+    if (this.saciedade == 0){
+        console.log("Seu Tamagochi morreu... É impossível alimentá-lo.")
+        return false
+    }
+    if (this.saciedade == this.saciedadeMax){
+        console.log("Seu Tamagochi está satisfeito!")
+        return false
+    }
+    this.saciedade += 1;
+    this.idade += 1;
+    return true
+
+}
+
+banharTamagochi(): boolean{
+    if(this.limpeza == 0){
+        console.log("Seu Tamagochi morreu por causa da sujeira. CHAMEM O IBAMAAA")
+        return false
+    }
+    if (this.limpeza == this.limpezaMax){
+        console.log("Seu Tamagochi está mais brilhante que chão de salão de ballet!")
+        return false
+    }
+    this.limpeza += 1;
+    this.idade += 1;
+    return true
+}
+
+dormirTamagochi(): boolean{
+    if(this.energia == 0){
+        console.log("Seu Tamagochi morreu de exaustão!")
+        return false
+    }
+    if(this.energia == this.energiaMax){
+        console.log("Seu Tamagochi está descansado completamente!")
+    }
+    this.energia += 1;
+    this.idade += 1;
+    return true
+}
+
+brincarTamagochi(): boolean{
+    if(this.energia == 0){
+        console.log("Como que você quer brincar com um defunto? Seu Estranho!")
+        return false   
+    }
+    this.diamantes += 1;
+    console.log("Ele brinca contigo! Que fofo!")
+    this.energia -= 1;
+    this.idade += 1;
+    return true
+    
+}
+
+trabalharTamagochi(): boolean{
+    if(this.energia == 0) {
+        console.log("O seu Tamagochi morreu de cansaço. Defunto não trabalha!")
+        return false
+    
+    }
+
+    if (this.limpeza == 0){
+        console.log("O seu Tamagochi morreu de sujeira. Defunta não trabalha!")
+        return false
+    }
+    this.diamantes += 2;
+    console.log("Mão na massa, Tamagochi!")
+    this.energia -= 3;
+    this.idade += 1;
+    this.chancebombadoTamagochi()
+    return true
+    
+
+}
+
+chancebombadoTamagochi(){
+    // Chance do Tamagochi ficar bombadão
+    let rand : number = Math.floor(Math.random()* 11)
+    if (rand == 10){
+        console.log("Seu Tamagochi ficou mais forte...")
+        this.energiaMax += 1;
+    }
+}
+
+
+}
+
+let poki = new Tamagochi("poki",5,5,5)
+poki.trabalharTamagochi()
+poki.trabalharTamagochi()
+
+
