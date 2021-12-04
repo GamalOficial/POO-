@@ -1,0 +1,36 @@
+class Objeto {
+    nome : string;
+
+    constructor(nome : string){
+        this.nome = nome
+    }
+    
+}
+
+class Lista {
+    lista = [];
+    constructor(lista : Array <Objeto | null> ){
+        this.lista = [];
+       
+
+    }
+
+    addObjeto(obj : Objeto){
+        this.lista.push(obj)
+    }
+
+    
+
+    
+}
+
+
+
+let pao = new Objeto("pão")
+let sacola = new Lista([])
+
+console.log(sacola)
+console.log(pao)
+sacola.addObjeto(pao)
+
+console.log(sacola)
