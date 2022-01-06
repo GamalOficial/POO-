@@ -1,0 +1,119 @@
+
+class Fone{
+    private id : string;
+    private number : string;
+    constructor(id : string, number : string){
+        this.id = id;
+        this.number = number;
+    }
+
+    public toString() : string{
+        return "nome: " + this.id + "fone: " + this.number
+
+    }
+
+    getId(){
+        console.log(this.id)
+
+    }
+
+    setId(Id : string){
+        this.id = Id;
+
+    }
+
+    getNumber(){
+        console.log(this.number)
+    }
+
+    setNumber(num : string){
+        this.number = num;
+    }
+
+    public Validate(): boolean {
+        let valid = "0123456789()-"
+        for (let i = 0; i < this.number.length;i++){
+            if (valid.indexOf(this.number[i]) == -1){     
+                return false
+            }
+          
+        }
+        return true
+        
+    }
+
+
+    public  isValid() : boolean{
+        if (this.Validate() == true){
+            console.log("Válido")
+            return true
+            
+        } else {
+            console.log("Inválido")
+            return false
+        }
+
+
+
+    }
+
+
+}
+
+
+
+
+
+class Contato {
+    label : string;
+    fones : Array < Fone > 
+
+    constructor(label : string, fones : Array<Fone>){
+        this.label = label;
+        this.fones = [];
+        for(let fone of fones){
+            this.addFone(fone)
+        }
+
+    }
+
+    public toString(): string {
+        return  this.label + ":" + this.fones
+
+    }
+
+    getFones(){
+        console.log(this.fones)
+    }
+
+    addFone(fone : Fone){
+        if (fone.isValid() == true)
+            this.fones.push(fone)
+    }
+
+    removeFone(fone : Fone){
+        this.fones.splice
+
+
+    }
+
+    setFones(fones : Array<Fone>){
+        this.fones = [];
+        let cont = 0
+        for (let fone of fones){
+            this.addFone(fone);
+            cont += 1
+        }
+
+    }
+}
+
+
+
+let GuiCasa = new Fone("Casa ", "999999")
+let GuiCel = new Fone("Celular ", "9993312012")
+let Guilherme = new Contato("Guilherme", [])
+Guilherme.addFone(GuiCasa)
+Guilherme.addFone(GuiCel)
+console.log(Guilherme)
+console.log(Guilherme.toString())
