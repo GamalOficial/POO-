@@ -1,0 +1,79 @@
+class Paciente{
+    private nome : string;
+    medicos: Map <string, Medico>
+    espmedicos: Map <string,Medico>
+    especialidade:string 
+
+    constructor(nome){
+        this.nome = nome;
+        this.medicos = new Map<string, Medico>()
+        this.espmedicos = new Map <string,Medico>() 
+    }
+
+    public getNome(){
+        return this.nome;
+    }
+
+    public addMedico(medico: Medico,especialidade): void{
+        let chave = medico.getNome()
+        if(this.medicos.has(chave))
+            return
+        if (this.espmedicos.has(especialidade))
+            return
+        this.medicos.set(chave, medico)
+        this.espmedicos.set(especialidade,medico)
+        medico.addPaciente(this,this)
+        
+    }
+    
+    public removeMedico(key:string): void{
+        if(!this.medicos.has(key))
+            return;
+        let med = this.medicos.get(key)
+        this.medicos.delete(key);
+        med.removePaciente(this.nome)       
+    }
+}
+
+class Medico{
+    nome: string;
+    pacientes : Map<string, Paciente>
+    especialidade: string;
+    especialidadeporPaciente : Map<string, Paciente>;
+
+    constructor(nome,especialidade){
+        this.nome = nome;
+        this.pacientes = new Map<string, Paciente>()
+        this.especialidade = especialidade;
+        this.especialidadeporPaciente = new Map<string, Paciente>()
+    }
+
+    public getNome(){
+        return this.nome;
+    }
+
+    public getEspecialidade(){
+        return this.especialidade
+    }
+
+    public addPaciente(paciente: Paciente, atesp): void{
+        let chave = paciente.getNome()
+        let esp = this.getEspecialidade()
+        if(this.pacientes.has(chave))
+            return
+        if (this.especialidadeporPaciente.has(atesp))
+            return
+                
+        this.pacientes.set(chave, paciente)
+        this.especialidadeporPaciente.set(this.especialidade, paciente)
+        paciente.addMedico(this,this)
+    }
+    
+    public removePaciente(key:string): void{
+        if(!this.pacientes.has(key))
+            return;
+        let pac = this.pacientes.get(key)
+        this.pacientes.delete(key);
+        pac.removeMedico(this.nome)       
+    }
+}
