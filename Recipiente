@@ -1,0 +1,78 @@
+class Recipiente{
+    tamanho:string;
+    cor:string;
+    formato:string;
+    temLiquido = false;
+
+    constructor(t:string, c:string, f:string){
+        this.tamanho = t;
+        this.cor = c;
+        this.formato = f;
+
+    }
+
+    colocarLiquido(){
+        console.log("Líquido Colocado!")
+        this.temLiquido = true;
+    }
+}
+
+class Copo extends Recipiente {
+    constructor(t:string, c:string,f:string){
+        super(t,c,f)
+    }
+
+    beberLiquido(){
+
+        if (this.temLiquido == true)
+            console.log("Glup Glup")
+        else
+            console.log("Não há líquido!")
+        
+        
+        
+    }
+}
+
+class BalãoPlástico extends Recipiente{
+    constructor(t:string, c:string, f:string){
+        super(t,c,f)
+
+    }
+
+    colocarLiquido(){
+        console.log("Líquido Colocado!")
+        this.temLiquido = true;
+    }
+
+    medirLíquido(){
+        if(this.temLiquido == true){
+            if(this.tamanho == "pequeno")
+                console.log("Tem pouco líquido!")
+            else if (this.tamanho == "medio")
+                console.log("Tem uma quantidade média de líquido!")
+            else if (this.tamanho == "grande")
+                console.log("Tem muito líquido!")
+        } else {
+            console.log("Não há líquido!")
+        }        
+    }
+
+}
+
+
+class Balde extends Recipiente{
+    constructor(t:string,c:string,f:string){
+        super(t,c,f)
+    }
+
+    JogarAgua(){
+        console.log("Tchibum!")
+    }
+
+}
+
+let copo1 = new Copo("medio","azul","quadrado")
+let b = new BalãoPlástico("grande","azul", "bola")
+
+b.medirLíquido()
