@@ -1,0 +1,64 @@
+class Criança {
+    nome : String;
+constructor(nome : String){
+    this.nome = nome;
+
+}
+}
+
+class Brinquedo {
+    espera : Array <Criança>
+    brinquedo : Array <Criança>
+constructor(){
+    this.espera = []
+    this.brinquedo = []
+}
+
+filabrinquedo(criança : Criança): void{
+    this.espera.push(criança)
+    
+}
+
+esperaTobrinquedo() : void {
+    this.brinquedo.push(this.espera[0])  
+    this.espera.shift()
+    
+    
+   
+
+}
+brinquedoToespera() : void {
+    this.espera.push(this.brinquedo[0])
+    this.brinquedo.shift()
+    
+
+
+}
+
+
+}
+let brinquedo = new Brinquedo()
+let criança0 = new Criança("Carla")
+let criança1 = new Criança("José")
+let criança2 = new Criança("João")
+
+
+brinquedo.filabrinquedo(criança0)
+brinquedo.filabrinquedo(criança1)
+brinquedo.filabrinquedo(criança2)
+
+
+
+console.log(brinquedo.espera)
+console.log(brinquedo.brinquedo)
+brinquedo.esperaTobrinquedo()
+console.log("---------------")
+console.log(brinquedo.espera)
+console.log(brinquedo.brinquedo)
+console.log("---------------")
+brinquedo.brinquedoToespera()
+console.log(brinquedo.espera)
+console.log(brinquedo.brinquedo)
+
+
+
