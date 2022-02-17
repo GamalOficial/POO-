@@ -1,0 +1,234 @@
+
+
+
+class User{
+
+    username: string;
+    inbox: Inbox;
+    followers: Map<string,User>
+    following: Map<string,User>
+    
+
+
+    constructor(u:string, i:Inbox){
+        
+        this.username = u;
+        this.inbox = i;
+        this.followers = new Map<string, User>()
+        this.following = new Map<string, User>()
+
+    }
+
+    getName(){
+        return this.username
+    }
+
+    follow(other: User){
+        
+        if (this.username == other.username){
+            console.log("Você não pode se seguir!")
+            return
+        }
+
+        if (this.following.has(this.username)){
+            console.log("Você já segue esse sujeito!")
+            return
+        }
+        
+        this.following.set(other.username,other)
+        other.followers.set(this.username, this)
+        
+
+    }
+
+    getInbox(){
+
+    }
+
+    sendTweet(ts: Tweet){
+
+    }
+
+    unfollow(other:User){
+        if (!this.following.has(other.username)){
+            console.log("Você não segue esse sujeito!")
+            return
+        }
+
+        this.following.delete(other.username)
+        other.followers.delete(this.username)
+        
+        
+
+
+    }
+
+    like(idTw:number){
+
+    }
+
+    unfollowAll(){
+        this.following.clear()
+        
+
+
+    }
+
+    rejectAll(){
+        this.followers.clear()
+        
+    }
+
+    toString(){
+        let seguidores = this.followers.keys()
+        let seguidos = this.following.keys()
+        console.log("Usuário: " + this.username + "\r\n" + "Seguidores: " + [...seguidores].join(", ") + "\r\n" + "Seguidos: " + [...seguidos].join(", ")) 
+    }
+}
+
+
+
+class Inbox{
+    
+
+    constructor(){
+
+    }
+}
+
+class Tweet{
+
+    private id: number;
+    private username:string;
+    private msg:string;
+    private likes:number;
+    private rt: Tweet | null;
+
+    constructor(id:number, username:string, msg: string, rt:Tweet|null,likes:number){
+        this.id = id;
+        this.username = username;
+        this.msg = msg;
+        this.rt = rt;
+        this.likes = likes;
+
+    }
+
+    toString(){
+        console.log("Id: " + this.id + "\r\n" + "Usuário: " + this.username + "\r\n" + "Mensagem: " + this.msg + "\r\n" + "Retweet: " + this.rt)
+    }
+
+    getId(){
+        console.log(this.id)
+    }
+
+    getSender(){
+        console.log(this.username)
+    }
+
+    getMsg(){
+        console.log(this.msg)
+    }
+
+    like(username:string){
+
+    }
+
+    getLikes(){
+        console.log(this.likes)
+    }
+
+
+
+
+}
+
+class Controler{
+    nextTweetID: number;
+    users: Map <string, User>
+    tweets: Map <number, Tweet>
+
+    
+    constructor(ntID:number){
+        this.nextTweetID = ntID;
+        this.users =  new Map <string, User>()
+        this.tweets = new Map<number, Tweet>()
+        
+
+    }
+
+
+
+    
+
+    addUser(username: string):void{
+        if (this.users.has(username)){
+            console.log("Já existe esse usuário")
+            return
+        }
+        let usuario = new User(username,0)
+        this.users.set(username,usuario)
+        console.log("Usuário criado!")
+    }
+
+
+
+    // tweet
+
+    sendTweet(username: string, msg : string){
+
+    }
+
+    getUser(username:string):User{
+        if (this.users.has(username)){
+                return this.users.get(username)!
+        }else{
+            throw new Error("Usuário não encontrado!")
+        }
+    }
+    
+
+    // getUser(username: string): User{
+    //     if(this.users.has(username) === true){
+    //        let user:undefined | User = this.users.get(username);
+    //        if (user!== undefined){
+    //            return user;
+    //        }
+    //        throw new Error("Usuário indefinido");
+         
+    //     }
+    //     throw new Error ("Não foi encontrado Usuário");
+    // }
+    //retweet
+
+    sendRt(username : string, twId: number, rtMsg : string ){
+        
+    }
+
+    //remover user
+
+    rmUser(username: string){
+        
+    }
+
+}
+
+let Con = new Controler(2)
+Con.addUser("Gamal")
+Con.addUser("Luma")
+console.log("---------------------")
+let user_Gamal = Con.getUser("Gamal")!
+let user_Luma = Con.getUser("Luma")!
+user_Gamal.follow(user_Luma)
+
+user_Gamal.toString()
+
+let Tw0 = new Tweet(0,"Gamal", "Teu cu",null,0)
+console.log("---------------------")
+//Tw0.toString()
+console.log("---------------------")
+user_Luma.follow(user_Gamal)
+user_Luma.toString()
+console.log("---------------------")
+user_Luma.unfollowAll()
+user_Luma.toString()
+
