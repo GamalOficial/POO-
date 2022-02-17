@@ -1,0 +1,68 @@
+class Peça {
+    cor:string;
+
+    constructor(c:string){
+        this.cor = c;
+    }
+
+    movimentar(){
+        console.log("Vuuush")
+    }
+}
+
+class Peão extends Peça{
+    número:number;
+
+    constructor(c:string,n:number){
+        super(c)
+        this.número = n;
+    }
+
+    movimentar(): void {
+        console.log("O movimento sempre será para frente")
+    }
+}
+
+class Cavalo extends Peça{
+    número:number;
+
+    constructor(c:string,n:number){
+        super(c)
+        this.número = n;
+    }
+
+    movimentar(): void {
+        console.log("O movimento sempre será em L")
+    }
+}
+
+class Bispo extends Peça{
+    número:number;
+
+    constructor(c:string,n:number){
+        super(c)
+        this.número = n;
+    }
+
+    movimentar(): void {
+        console.log("O movimento sempre será nas Diagonais")
+    }
+}
+
+class Rainha extends Peça{
+    número:number;
+
+    constructor(c:string,n:number){
+        super(c)
+        this.número = n;
+    }
+
+    movimentar(): void {
+        console.log("O movimento sempre será Para a Vertical, Horizontal e Diagonais")
+    }
+}
+
+let p1 = new Peão("branca",1)
+let c1 = new Cavalo("preta",2)
+p1.movimentar()
+c1.movimentar()
