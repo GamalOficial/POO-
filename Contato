@@ -1,0 +1,93 @@
+class Fone {
+    private id : string;
+    private number : string;
+
+    constructor(id : string, number : string) {
+        this.id = id;
+        this.number = number;
+    }
+    // Formatação
+    toString(){
+        console.log("Id: " + this.id + " | " + "Número: " + this.number)
+    }
+    // Ajustando Id
+    setId(Id:string){
+        this.id = Id;
+    }
+    // Visualizando Id
+    getId(){
+        console.log(this.id)
+    }
+    // Ajustando Number
+    setNumber(Number:string){
+        this.number = Number; 
+    }
+    // Visualizando Number
+    getNumber(){
+        console.log(this.number)
+    }
+    
+    // Verificando se um número é válido
+    public validate(Valnumber: string): boolean{
+        let valid = "0123456789()-"
+
+        for (let i = 0; i < Valnumber.length; i++) {
+            if(valid.indexOf(Valnumber[i]) == -1) {
+                console.log("Deu ruim")
+                return false
+                
+            }
+        }
+        console.log("Validado com Sucesso")
+        return true
+
+
+    }
+}
+
+class Contato{
+    private fones : Array <Fone>;
+    private nome : string;
+
+    constructor(fones:Array<Fone>, nome: string){
+        this.fones = fones;
+        this.nome = nome;
+
+    }
+    // Adicionando Fones no Contato
+    addFone(fone: Fone){
+        this.fones.push(fone)
+
+    }
+    // Visualizando Fones
+    getFones(){
+        console.log(this.fones);
+    }
+    // Ajustando Fones
+    setFones(fone:Array<Fone>){
+        this.fones = fone;
+    }
+    // Visualizando Nomes
+    getNome(){
+        console.log(this.nome)
+    }
+    // Ajustando Nomes
+    setNome(nome:string){
+        this.nome = nome;
+
+    }
+    // Formatação
+    toString(){
+        console.log("Contato: " + this.nome + " | " + "fones: " + this.fones)
+    }
+}
+
+let fone = new Fone("Casa","123")
+
+
+let contato = new Contato([], "Gamal")
+contato.toString()
+contato.addFone(fone)
+contato.toString()
+
+
